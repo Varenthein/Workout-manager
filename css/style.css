@@ -1,0 +1,13 @@
+form {
+  align-items:center;
+  display: flex;
+  height: 100vh;
+}
+input.form-control {
+  display: inherit;
+  margin: 0 10px;
+  width: 100px;
+}
+#timer {
+  font-size: 90vh;
+}

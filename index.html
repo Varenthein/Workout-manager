@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="../dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
-    <link href="../dist/css/flat-ui.min.css" rel="stylesheet">
+    <link href="css/flat-ui.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="img/favicon.ico">
 
@@ -21,23 +22,26 @@
   </head>
   <body>
     <div class="container">
-        <h1>Interval manager</h1>
-        <hr>
         <form>
+            <h1>Interval manager</h1>
+            <hr>
             Liczba sesji: <input class="form-control" value="0" type="number" id="sessions">
             Długość ćwiczenia: <input class="form-control" value="0" type="number" id="workout_time">
             Długość przerwy: <input class="form-control" value="0" type="number" id="rest_time">
-            <a class="btn btn-primary">Rozpocznij</a>
+            <a class="btn btn-primary submit">Rozpocznij</a>
+            <hr>
         </form>
+        <h2 id="timer"><span>0</span><small>sec</small></h2>
     </div>
     <!-- /.container -->
 
 
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-    <script src="../dist/js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/script.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../dist/js/vendor/video.js"></script>
-    <script src="../dist/js/flat-ui.min.js"></script>
+    <script src="js/vendor/video.js"></script>
+    <script src="js/flat-ui.min.js"></script>
 
   </body>
 </html>
