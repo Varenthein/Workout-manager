@@ -9,5 +9,10 @@ input.form-control {
   width: 100px;
 }
 #timer {
-  font-size: 90vh;
+  align-items:center;
+  display: flex;
+  font-size: 50vmin;
+  height: 100vh;
+  justify-content:center;
+  width: 100%;
 }

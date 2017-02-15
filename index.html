@@ -21,11 +21,15 @@
     <![endif]-->
   </head>
   <body>
+    <audio id="victory">
+        <source src="audio/victory.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <div class="container">
         <form>
             <h1>Interval manager</h1>
             <hr>
-            Liczba sesji: <input class="form-control" value="0" type="number" id="sessions">
+            Liczba powtórzeń: <input class="form-control" value="0" type="number" id="sessions">
             Długość ćwiczenia: <input class="form-control" value="0" type="number" id="workout_time">
             Długość przerwy: <input class="form-control" value="0" type="number" id="rest_time">
             <a class="btn btn-primary submit">Rozpocznij</a>
