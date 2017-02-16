@@ -25,13 +25,21 @@
         <source src="audio/victory.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+    <audio id="rest">
+        <source src="audio/rest.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="fight">
+        <source src="audio/fight.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
     <div class="container">
         <form autocomplete="off">
             <h1>Interval manager</h1>
             <hr>
             Liczba powtórzeń: <input class="form-control" value="1" min=1 type="number" id="sessions">
-            Długość ćwiczenia: <input class="form-control" value="0" type="number" id="workout_time">
-            Długość przerwy: <input class="form-control" value="0" type="number" id="rest_time">
+            Długość ćwiczenia: <input class="form-control" value="0" min=0 type="number" id="workout_time">
+            Długość przerwy: <input class="form-control" value="0" min=0 type="number" id="rest_time">
             <a class="btn btn-primary submit">Rozpocznij</a>
             <hr>
         </form>

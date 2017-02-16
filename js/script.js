@@ -12,7 +12,20 @@ const workout_complete = document.querySelector(".info h3[data-bind='sessions'] 
 const time_left_info = document.querySelector(".info h3[data-bind='time_left'] span");
 
 //sounds
-victory_sound = document.querySelector("audio#victory");
+let victory_sound = document.querySelector("audio#victory");
+let rest_sound = document.querySelector("audio#rest");
+let fight_sound = document.querySelector("audio#fight");
+
+//Youtube get playlists
+
+let request = new XMLHttpRequest();
+request.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     console.dir(this.response.items);
+    }
+  };
+  request.open("GET", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PL3JsLcHQKdHuC5GBjFeBb1o71ihwCTZQu&key=AIzaSyB7zZzAkQ7H09mtTwoenyki8FA38dIBOGk", true);
+  request.send();
 
 //FADE IN, FADE OUT functions
 
@@ -37,10 +50,7 @@ Element.prototype.fadeOut = function(callbackF) {
 
 //Seconds formatting
 
-Number.prototype.formatTime = () => {
-
-    if(isNaN(parseInt(this))) return "00:00:00";
-    else {
+Number.prototype.formatTime = function() {
       let sec_num = parseInt(this, 10);
       let hours   = Math.floor(sec_num / 3600);
       let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -50,13 +60,16 @@ Number.prototype.formatTime = () => {
       if (minutes < 10) {minutes = "0"+minutes;}
       if (seconds < 10) {seconds = "0"+seconds;}
       return hours+':'+minutes+':'+seconds;
-    }
 }
 
 //play workout function
 play_workout = (session = 0, w_time = 0, r_time = 0) => {
   //console.log(`session ${session}, w_time ${w_time}, r_time ${r_time}`);//debug
   if(w_time != 0) {
+    if(w_time == 1) {
+      rest_sound.currentTime = 0;
+      rest_sound.play();
+    }
     if(w_time <= 10) content.style.background = "#e74c3c";
     else content.style.background = "#f39c12";
     timer.innerHTML = w_time;
@@ -73,6 +86,8 @@ play_workout = (session = 0, w_time = 0, r_time = 0) => {
   else if(session > 1) {
     present_session++;
     workout_complete.innerHTML = present_session+"/"+sessions;
+    fight_sound.currentTime = 0;
+    fight_sound.play();
     setTimeout(() => { play_workout(session-1, workout_time, rest_time) }, 1000);
   }
   else {
@@ -103,6 +118,8 @@ document.querySelector("form a.submit").addEventListener('click',() => {
     workout_complete.innerHTML = present_session+"/"+sessions;
     time_left = workout_length;
     time_left_info.innerHTML = workout_length.formatTime();
+    fight_sound.currentTime = 0;
+    fight_sound.play();
     form.fadeOut();
     info.fadeIn();
 
