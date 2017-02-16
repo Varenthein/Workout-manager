@@ -1,9 +1,15 @@
 let sessions = 0;
 let workout_time = 0;
 let rest_time = 0;
+let workout_length = 0;
+let time_left = 0;
+let present_session = 1;
+const info = document.querySelector(".info");
 const timer = document.querySelector("#timer span");
 const form = document.querySelector("form");
 const content = document.querySelector("body");
+const workout_complete = document.querySelector(".info h3[data-bind='sessions'] span");
+const time_left_info = document.querySelector(".info h3[data-bind='time_left'] span");
 
 //sounds
 victory_sound = document.querySelector("audio#victory");
@@ -29,22 +35,41 @@ Element.prototype.fadeOut = function(callbackF) {
 
 }
 
+//Seconds formatting
+
+Number.prototype.formatTime = () => {
+
+    let sec_num = parseInt(this, 10);
+    let hours   = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    let seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds;
+}
+
 //play workout function
-function play_workout(session = 0, w_time = 0, r_time = 0) {
-  console.log(`session ${session}, w_time ${w_time}, r_time ${r_time}`);
+play_workout = (session = 0, w_time = 0, r_time = 0) => {
+  //console.log(`session ${session}, w_time ${w_time}, r_time ${r_time}`);//debug
   if(w_time != 0) {
     if(w_time <= 10) content.style.background = "#e74c3c";
     else content.style.background = "#f39c12";
     timer.innerHTML = w_time;
+    time_left_info.innerHTML = (workout_length--).formatTime();
     setTimeout(() => { play_workout(session, w_time-1, r_time) }, 1000);
   }
   else if(r_time != 0) {
     if(r_time <= 10) content.style.background = "#e74c3c";
     else content.style.background = "#2ecc71";
     timer.innerHTML = r_time;
+    time_left_info.innerHTML = (workout_length--).formatTime();
     setTimeout(() => { play_workout(session, w_time, r_time-1) }, 1000);
   }
   else if(session > 1) {
+    present_session++;
+    workout_complete.innerHTML = present_session+"/"+sessions;
     setTimeout(() => { play_workout(session-1, workout_time, rest_time) }, 1000);
   }
   else {
@@ -52,7 +77,7 @@ function play_workout(session = 0, w_time = 0, r_time = 0) {
     victory_sound.currentTime = 0;
     victory_sound.play();
     timer.innerHTML = "Victory!";
-    setTimeout(() => { timer.fadeOut(); form.fadeIn(); }, 3000);
+    setTimeout(() => { info.fadeOut(); form.fadeIn(); content.style.background = "#ffff"; }, 3000);
   }
 }
 //Watch for options changes
@@ -70,9 +95,14 @@ Array.from(document.querySelectorAll("form input")).forEach(input => {
 
 document.querySelector("form a.submit").addEventListener('click',() => {
 
-    //let workout_length = sessions * (number.parseFloat(workout_time) + number.parseFloat(rest_time)); //calculate full session time
+    workout_length = sessions * (parseInt(workout_time) + parseInt(rest_time)); //calculate full session time
+    present_session = 1;
+    workout_complete.innerHTML = present_session+"/"+sessions;
+    time_left = workout_length;
+    time_left_info.innerHTML = workout_length.formatTime();
     form.fadeOut();
-    timer.fadeIn();
+    info.fadeIn();
+
     play_workout(sessions, workout_time, rest_time);
 
 });

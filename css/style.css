@@ -8,11 +8,22 @@ input.form-control {
   margin: 0 10px;
   width: 100px;
 }
+.info {
+  align-items:center;
+  display: none;
+  flex-wrap: wrap;
+  justify-content:center;
+  height: 100vh;
+  width: 100%;
+}
+h3 span {
+  color:#fff;
+  margin:0px 10px;
+}
 #timer {
   align-items:center;
   display: flex;
   font-size: 50vmin;
-  height: 100vh;
   justify-content:center;
   width: 100%;
 }
