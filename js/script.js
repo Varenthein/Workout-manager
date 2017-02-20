@@ -15,6 +15,7 @@ const time_left_info = document.querySelector(".info h3[data-bind='time_left'] s
 let victory_sound = document.querySelector("audio#victory");
 let rest_sound = document.querySelector("audio#rest");
 let fight_sound = document.querySelector("audio#fight");
+let tensec_sound = document.querySelector("audio#tensec");
 
 //Youtube get playlists
 
@@ -66,6 +67,10 @@ Number.prototype.formatTime = function() {
 play_workout = (session = 0, w_time = 0, r_time = 0) => {
   //console.log(`session ${session}, w_time ${w_time}, r_time ${r_time}`);//debug
   if(w_time != 0) {
+    if(w_time == 10) {
+      tensec_sound.currentTime = 0;
+      tensec_sound.play();
+    }
     if(w_time == 1) {
       rest_sound.currentTime = 0;
       rest_sound.play();
@@ -77,6 +82,10 @@ play_workout = (session = 0, w_time = 0, r_time = 0) => {
     setTimeout(() => { play_workout(session, w_time-1, r_time) }, 1000);
   }
   else if(r_time != 0) {
+    if(r_time == 10) {
+      tensec_sound.currentTime = 0;
+      tensec_sound.play();
+    }
     if(r_time <= 10) content.style.background = "#e74c3c";
     else content.style.background = "#2ecc71";
     timer.innerHTML = r_time;
